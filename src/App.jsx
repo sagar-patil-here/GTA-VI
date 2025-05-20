@@ -1,9 +1,11 @@
 /* eslint-disable no-unused-vars */
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 import 'remixicon/fonts/remixicon.css'
 import { Helmet } from 'react-helmet'
+import LocomotiveScroll from 'locomotive-scroll'
+import 'locomotive-scroll/dist/locomotive-scroll.css'
 
 function App() {
   useEffect(() => {
@@ -22,6 +24,7 @@ function App() {
   let [showContent, setShowContent] = useState(false);
   let [isMuted, setIsMuted] = useState(true);
   let [player, setPlayer] = useState(null);
+  const scrollRef = useRef(null);
 
   useEffect(() => {
     // Initialize SoundCloud Widget API
@@ -111,9 +114,15 @@ function App() {
       });
     }, [showContent]);
 
- 
-
-
+  useEffect(() => {
+    if (!showContent) return;
+    const scroll = new LocomotiveScroll({
+      el: scrollRef.current,
+      smooth: true,
+      lerp: 0.08,
+    });
+    return () => scroll && scroll.destroy();
+  }, [showContent]);
 
   return (
     <>
@@ -176,7 +185,7 @@ function App() {
         </svg>
       </div>
       {showContent && (
-        <div className='main w-full absolute top-0 left-0 z-[101] opacity-0'>
+        <div data-scroll-container ref={scrollRef} className='main w-full absolute top-0 left-0 z-[101] opacity-0'>
             <div className='landing w-full h-screen bg-black'>
               <div className="nav absolute top-0 left-0 w-full z-[100] py-10 px-10">
                     <div className="logo-element flex gap-[7px]">

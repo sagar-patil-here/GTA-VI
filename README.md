@@ -3,7 +3,7 @@
 This project is a fun, creative reimagining of a Grand Theft Auto VI landing page, built to explore the power of React.js and AI-assisted development. The goal was to push frontend creativity and animation, using modern web technologies and AI tools to bring a vibrant, interactive experience to life.
 
 ## 🚀 Live Demo
-[View the project live](https://gta-vi-mocha.vercel.app/)
+[View the project live](https://gta-vi-rose.vercel.app/)
 
 ## ✨ About
 - Built for fun and experimentation with React.js
