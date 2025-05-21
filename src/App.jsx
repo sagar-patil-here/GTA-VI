@@ -121,7 +121,22 @@ function App() {
       smooth: true,
       lerp: 0.08,
     });
-    return () => scroll && scroll.destroy();
+
+    // Force update after images/videos load
+    window.onload = () => {
+      scroll.update();
+    };
+
+    // Optional: Use ResizeObserver to update on height changes
+    const resizeObserver = new ResizeObserver(() => {
+      scroll.update();
+    });
+    resizeObserver.observe(scrollRef.current);
+
+    return () => {
+      scroll.destroy();
+      resizeObserver.disconnect();
+    };
   }, [showContent]);
 
   return (
@@ -185,7 +200,7 @@ function App() {
         </svg>
       </div>
       {showContent && (
-        <div data-scroll-container ref={scrollRef} className='main w-full absolute top-0 left-0 z-[101] opacity-0'>
+        <div data-scroll-container ref={scrollRef} className='main w-full relative z-[101]'>
             <div className='landing w-full h-screen bg-black'>
               <div className="nav absolute top-0 left-0 w-full z-[100] py-10 px-10">
                     <div className="logo-element flex gap-[7px]">
