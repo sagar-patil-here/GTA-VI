@@ -22,6 +22,7 @@ function App() {
   }, []);
 
   let [showContent, setShowContent] = useState(false);
+  let [contentVisible, setContentVisible] = useState(false);
   let [isMuted, setIsMuted] = useState(true);
   let [player, setPlayer] = useState(null);
   const scrollRef = useRef(null);
@@ -85,13 +86,7 @@ function App() {
   // Add a separate effect for main content animation
   useEffect(() => {
     if (showContent) {
-      // Animated main content when it appears
-      gsap.to(".main", {
-        opacity: 1,
-        duration: 0.8,
-        ease: "Power2.easeOut",
-        delay: 0.1
-      });
+      setTimeout(() => setContentVisible(true), 10); // allow for mount
     }
   }, [showContent]);
 
@@ -200,7 +195,7 @@ function App() {
         </svg>
       </div>
       {showContent && (
-        <div data-scroll-container ref={scrollRef} className='main w-full relative z-[101]'>
+        <div data-scroll-container ref={scrollRef} className={`main w-full relative z-[101] transition-opacity duration-700 ${contentVisible ? 'opacity-100' : 'opacity-0'}`}>
             <div className='landing w-full h-screen bg-black'>
               <div className="nav absolute top-0 left-0 w-full z-[100] py-10 px-10">
                     <div className="logo-element flex gap-[7px]">
@@ -220,7 +215,7 @@ function App() {
                 <h1 className='text-[8rem] leading-none ml-15'>theft</h1>
                 <h1 className='text-[8rem] leading-none -ml-20'>auto</h1></div>
                 <img src="./girlbg.png" className='girl absolute -bottom-[50%] left-1/2 -translate-x-1/2 scale-90' />
-                <div className="btmbar flex items-center text-white absolute w-full px-10 py-5 bg-gradient-to-t from-black to-transparent bottom-0 left-0 z-10">
+                <div className="btmbar flex items-center text-white absolute w-full px-10 py-5 bg-gradient-to-t from-black to-transparent  bottom-0 left-0 z-10">
                   <div className='flex gap-4 items-center'>
                     <i className="text-2xl ri-arrow-down-line"></i>
                     <h2 className='text-xl font-[sans-serif]'>
